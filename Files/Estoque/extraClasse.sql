@@ -13,7 +13,7 @@ produto está (caso ele esteja em prateleira) ou o número das seções (caso de
 produtos que não estão em prateleiras). É necessário garantir que todos os
 produtos apareçam, mesmo que não estejam em prateleiras ou seções. */
 
-SELECT p.codprod as produto, p.descricao as nome, pr.numprat as prateleira, s.numsecao as seção
+SELECT p.codprod as produto, p.descricao as nome, pr.numprat as prateleira, s.numsecao as secao
 FROM produto p
          FULL OUTER JOIN prateleira pr ON p.codprod = pr.codprod
          FULL OUTER JOIN secao s on pr.numsecao = s.numsecao;
