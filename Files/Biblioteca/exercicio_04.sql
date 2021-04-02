@@ -3,21 +3,23 @@
    o título do livro, o nome da editora do livro e o número da estante em que está o livro. Ordenar
    pelo nome do usuário.*/
 
-SELECT r.dataret,
-       r.dataentreal,
+SELECT r.dataret     as data_retirada,
+       r.dataentreal as data_entrega,
        r.multa,
-       u.nome,
-       u.codcid,
+       u.nome        as nome,
+       c.nome        as cidade,
        l.titulo,
        e.nome,
-       es.numest
+       es.numest     as numero_estante
 FROM retirada r,
      usuario u,
      livro l,
+     cidade c,
      editora e,
      estante es
 WHERE u.codusu = r.codusu
   AND r.codlivro = l.codlivro
+  AND u.codcid = c.codcid
   AND l.numest = es.numest
   AND l.codedit = e.codedit
   AND r.dataret BETWEEN '01/01/2017' AND '03/12/2017'

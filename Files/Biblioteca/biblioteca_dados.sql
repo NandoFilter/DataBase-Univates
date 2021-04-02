@@ -78,3 +78,15 @@ WHERE nome LIKE '%Vargas%'
 SELECT *
 FROM usuario
 WHERE UPPER(nome) LIKE '%VARGAS%';
+
+SELECT COUNT(*), SUM(multa), MAX(multa), MAX(dataret) FROM retirada; -- COUNT Não conta valores nulos
+
+SELECT COUNT(DISTINCT codlivro) FROM retirada;
+
+SELECT u.codusu, u.nome, SUM(r.multa)
+FROM retirada r,
+     usuario u
+WHERE r.codusu = u.codusu
+GROUP BY u.codusu
+HAVING SUM(r.multa) > 0
+ORDER BY SUM(r.multa);

@@ -6,7 +6,7 @@ CREATE TABLE pais
 );
 
 SELECT *
-FROM pais INSERT INTO pais
+FROM pais INSERT INTO pais;
 VALUES (1, 'Brasil');
 DROP TABLE pais;
 
@@ -21,7 +21,7 @@ CREATE TABLE estado
 );
 
 SELECT *
-FROM estado INSERT INTO estado
+FROM estado INSERT INTO estado;
 VALUES (1, 'Rio Grande do Sul', 'RS', 1);
 
 CREATE TABLE cidade
