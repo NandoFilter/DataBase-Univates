@@ -1,3 +1,5 @@
+-- EXTRA CLASSE 01
+
 -- Exercício 01
 
 /* Produtos podem estar armazenados em prateleiras ou simplesmente estarem
@@ -71,4 +73,5 @@ FROM produto p,
      movest mv,
      funcionario f
 WHERE mv.codprod = p.codprod
-AND f.matfunc BETWEEN '74' AND '75';
+  AND mv.funcresp = f.matfunc
+  AND (f.matfunc = '74' OR f.matfunc = '75');
