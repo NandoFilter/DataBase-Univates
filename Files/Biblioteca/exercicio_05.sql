@@ -27,19 +27,22 @@ GROUP BY u.nome, u.datanasc;
 associados a categoria. Exibir o código e a descrição da categoria e a contagem de livros. Categorias
 que não possuem livros devem aparecer com a contagem igual a 0. */
 
-SELECT c.codcat, c.descricao, COUNT(lc.codlivro) as qntd_livros
-FROM livrocategoria lc
-         LEFT JOIN categoria c ON c.codcat = lc.codcat
-GROUP BY c.codcat, c.descricao;
+SELECT c.codcat, c.descricao, COUNT(l.codlivro) as qntd_livros
+FROM categoria c
+         LEFT JOIN livrocategoria lc ON c.codcat = lc.codcat
+         LEFT JOIN livro l ON lc.codlivro = l.codlivro
+GROUP BY c.codcat
+ORDER BY c.codcat;
 
 /* Mostrar um resumo dos bibliotecários contratados por cidade. Exibir o código e o nome da cidade,
    quantos bibliotecários residem em cada cidade, a média dos salários do bibliotecários por cidade.
    Devem ser exibidas apenas as cidades que apresentam média de salário maior ou igual a 1500.
    Ordenar pelo número de bibliotecários de cada cidade.*/
 
-SELECT b.nummat as cod_bibliotecario, c.nome as nome_cid, COUNT(b.codcid), b.valorsal
+SELECT c.codcid, c.nome as nome_cid, COUNT(b.nummat) num_bibliotecarios, AVG(b.valorsal) salario_medio
 FROM bibliotecario b,
      cidade c
 WHERE b.codcid = c.codcid
-GROUP BY b.nummat, c.nome
-ORDER BY COUNT(b.codcid);
+GROUP BY c.codcid
+HAVING AVG(b.valorsal)>1500
+ORDER BY num_bibliotecarios
