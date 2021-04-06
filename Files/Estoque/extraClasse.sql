@@ -18,7 +18,6 @@ FROM produto p
          FULL OUTER JOIN prateleira pr ON p.codprod = pr.codprod
          FULL OUTER JOIN secao s ON pr.numsecao = s.numsecao;
 
-
 -- Exercício 02
 
 /* Houve um problema com o estoque e a empresa suspeita que movimentações
