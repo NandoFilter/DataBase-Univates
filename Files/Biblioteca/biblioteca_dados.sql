@@ -23,7 +23,7 @@ FROM reserva,
      livro
 WHERE reserva.codlivro = livro.codlivro;
 
-
+/* ------------------------------------- */
 
 SELECT l.titulo, r.datares data_reserva, r.codusu, u.nome
 FROM livro l,
@@ -51,7 +51,7 @@ FROM usuario,
      cidade
 WHERE usuario.codcid = cidade.codcid;
 
-
+/* ------------------------------------- */
 
 SELECT *
 FROM cidade;
@@ -79,9 +79,11 @@ SELECT *
 FROM usuario
 WHERE UPPER(nome) LIKE '%VARGAS%';
 
-SELECT COUNT(*), SUM(multa), MAX(multa), MAX(dataret) FROM retirada; -- COUNT Não conta valores nulos
+SELECT COUNT(*), SUM(multa), MAX(multa), MAX(dataret)
+FROM retirada; -- COUNT Não conta valores nulos
 
-SELECT COUNT(DISTINCT codlivro) FROM retirada;
+SELECT COUNT(DISTINCT codlivro)
+FROM retirada;
 
 SELECT u.codusu, u.nome, SUM(r.multa)
 FROM retirada r,
