@@ -16,7 +16,7 @@ produtos apareçam, mesmo que não estejam em prateleiras ou seções. */
 SELECT p.codprod as produto, p.descricao as nome, pr.numprat as prateleira, s.numsecao as secao
 FROM produto p
          FULL OUTER JOIN prateleira pr ON p.codprod = pr.codprod
-         FULL OUTER JOIN secao s on pr.numsecao = s.numsecao;
+         FULL OUTER JOIN secao s ON pr.numsecao = s.numsecao;
 
 
 -- Exercício 02
@@ -60,7 +60,7 @@ FROM nfvenda nfv,
 WHERE pnfv.numnf = nfv.numnf
   AND nfv.codcli = c.codcli
   AND c.codcid = cid.codcid
-  AND nfv.dtemissao BETWEEN '01/05/2018' AND '31/05/2018'
+  AND nfv.dtemissao BETWEEN '01/05/2018' AND '31/05/2018';
 
 -- Exercício 04
 
@@ -71,9 +71,8 @@ nome do funcionário responsável pela movimentação e a quantidade
 movimentada. */
 
 SELECT p.codprod, p.descricao as descricao_prod, mv.datahora, f.nome as nome_funcionario, mv.qtde
-FROM produto p,
-     movest mv,
-     funcionario f
-WHERE mv.codprod = p.codprod
-  AND mv.funcresp = f.matfunc
-  AND (f.matfunc = '74' OR f.matfunc = '75');
+FROM produto p
+         INNER JOIN movest mv ON mv.codprod = p.codprod
+         INNER JOIN funcionario f ON f.matfunc = mv.funcresp
+WHERE f.matfunc = 74
+   OR mv.funcresp = 75;
