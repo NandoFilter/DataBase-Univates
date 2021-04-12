@@ -33,6 +33,7 @@ CREATE TABLE cidade
     CONSTRAINT fk_codest_cidade FOREIGN KEY (codest) REFERENCES estado
 );
 
+/* Criar Tabela */
 CREATE TABLE usuario
 (
     codusu   INT          NOT NULL,
@@ -41,12 +42,15 @@ CREATE TABLE usuario
     rg       INT,
     datanasc DATE         NOT NULL,
     codcid   INT          NOT NULL,
-    CONSTRAINT pk_usuario PRIMARY KEY (codusu),
-    CONSTRAINT fk_codcid_usuario FOREIGN KEY (codcid) REFERENCES cidade
+    CONSTRAINT pk_usuario PRIMARY KEY (codusu),                             -- Criar Chave Primária
+    CONSTRAINT fk_codcid_usuario FOREIGN KEY (codcid) REFERENCES cidade     -- Criar Chave Estrangeira
 );
 
+/* Adicionar algo de uma Tabela Existente */
 ALTER TABLE usuario
     ADD idade INT;
+
+/* Remover algo de uma Tabela Existente */
 ALTER TABLE usuario
     DROP idade;
 
