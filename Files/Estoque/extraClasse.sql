@@ -2,6 +2,8 @@
 
 /* Fernando Halmenschlager Filter - 703692*/
 
+--------------------------------------------------
+
 -- Exercício 01
 
 /* Produtos podem estar armazenados em prateleiras ou simplesmente estarem
@@ -17,6 +19,15 @@ SELECT p.codprod as produto, p.descricao as nome, pr.numprat as prateleira, s.nu
 FROM produto p
          FULL OUTER JOIN prateleira pr ON p.codprod = pr.codprod
          FULL OUTER JOIN secao s ON pr.numsecao = s.numsecao;
+
+-- Resposta
+SELECT p.codprod, p.descricao, s.numsecao, pr.numprat
+FROM produto p
+         left join prateleira pr on p.codprod = pr.codprod
+         left join prodsec ps on p.codprod = ps.codprod
+         left join secao s on s.numsecao = ps.numsecao;
+
+--------------------------------------------------
 
 -- Exercício 02
 
@@ -35,6 +46,19 @@ WHERE mv.codprod = p.codprod
   AND p.codgru = gp.codgru
   AND mv.datahora BETWEEN '01/06/2018' AND '30/06/2018'
 ORDER BY p.descricao;
+
+-- Resposta
+SELECT p.codprod, p.descricao, m.datahora, m.qtde, g.descricao
+FROM movest m,
+     produto p,
+     grupoprod g
+WHERE m.codprod = p.codprod
+  AND p.codgru = g.codgru
+  AND m.datahora
+    BETWEEN '01/06/18' AND '30/06/18'
+ORDER BY m.codprod;
+
+--------------------------------------------------
 
 -- Exercício 03
 
@@ -61,6 +85,25 @@ WHERE pnfv.numnf = nfv.numnf
   AND c.codcid = cid.codcid
   AND nfv.dtemissao BETWEEN '01/05/2018' AND '31/05/2018';
 
+-- Resposta
+SELECT n.numnf,
+       n.dtemissao,
+       cl.fantasia,
+       ci.nome,
+       pn.codprod,
+       pn.qtde,
+       pn.preco,
+       pn.qtde * pn.preco as valorvenda
+FROM nfvenda n,
+     prodnfvenda pn,
+     cliente cl,
+     cidade ci
+WHERE n.codcli = cl.codcli
+  and cl.codcid = ci.codcid
+  and n.numnf = pn.numnf;
+
+--------------------------------------------------
+
 -- Exercício 04
 
 /* Elabore uma consulta que mostre todas as movimentações feitas pelos
@@ -75,3 +118,12 @@ FROM produto p
          INNER JOIN funcionario f ON f.matfunc = mv.funcresp
 WHERE f.matfunc = 74
    OR mv.funcresp = 75;
+
+-- Resposta
+SELECT p.codprod, p.descricao, m.datahora, f.nome, m.qtde
+FROM movest m,
+     produto p,
+     funcionario f
+WHERE m.funcresp = f.matfunc
+  AND m.codprod = p.codprod
+  AND (m.funcresp = 74 OR m.funcresp = 75);
