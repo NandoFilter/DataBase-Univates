@@ -23,7 +23,7 @@ SELECT l.titulo, e.situacao, COUNT(e.situacao) num_exemplares
 FROM livro l,
      exemplar e
 WHERE l.codlivro = e.codlivro
-GROUP BY l.codlivro, e.situacao
+GROUP BY l.codlivro, e.situacao;
 
 /* Criar uma consulta para um resumo das reservas por editora. Exibir o código e a
 descrição da editora, quantas reservas foram feitas, quantos usuários diferentes fizeram
