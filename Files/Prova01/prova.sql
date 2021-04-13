@@ -53,10 +53,11 @@ inscrições feitas para a atividade. É importante verificar que a chave da ati
 (codeve, sequencia) e o agrupamento deve ser feito por esta chave. */
 
 SELECT a.codeve,
-       ia.sequencia,
+       a.sequencia,
        SUM(ia.valor) soma_valores,
        AVG(ia.valor) media_valores
 FROM atividade a,
      inscativ ia
 WHERE ia.codeve = a.codeve
-GROUP BY a.codeve, ia.sequencia;
+  AND ia.sequencia = a.sequencia
+GROUP BY a.codeve, a.sequencia;
