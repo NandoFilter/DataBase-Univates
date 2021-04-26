@@ -46,6 +46,16 @@ WHERE ip.codinst = i.codinst
   AND ip.codpess = p.codpess
 ORDER BY i.nome;
 
+-- Correção:
+
+SELECT i.codinst,
+       i.nome as nome_instituicao,
+       p.nome as nome_pessoa
+FROM instituicao i
+         LEFT JOIN instituicaopessoa ip ON i.codinst = ip.codinst
+         LEFT JOIN pessoa p ON p.codpess = ip.codpess
+ORDER BY i.nome;
+
 /* 4. O administrador financeiro da associação que controla os eventos deseja saber quanto foi
 arrecadado para cada atividade. Para obter esta informação precisa de uma consulta que
 mostre o código do evento, a sequencia da atividade, a soma e a média dos valores pagos nas
@@ -61,3 +71,9 @@ FROM atividade a,
 WHERE ia.codeve = a.codeve
   AND ia.sequencia = a.sequencia
 GROUP BY a.codeve, a.sequencia;
+
+-- Outro formato:
+
+SELECT ia.codeve, ia.sequencia, SUM(ia.valor) soma_valor, AVG(ia.valor) media_valores
+FROM inscativ ia
+GROUP BY ia.codeve, ia.sequencia;
