@@ -42,8 +42,8 @@ CREATE TABLE usuario
     rg       INT,
     datanasc DATE         NOT NULL,
     codcid   INT          NOT NULL,
-    CONSTRAINT pk_usuario PRIMARY KEY (codusu),                             -- Criar Chave Primária
-    CONSTRAINT fk_codcid_usuario FOREIGN KEY (codcid) REFERENCES cidade     -- Criar Chave Estrangeira
+    CONSTRAINT pk_usuario PRIMARY KEY (codusu),                         -- Criar Chave Primária
+    CONSTRAINT fk_codcid_usuario FOREIGN KEY (codcid) REFERENCES cidade -- Criar Chave Estrangeira
 );
 
 /* Adicionar algo de uma Tabela Existente */
@@ -189,3 +189,14 @@ CREATE TABLE retirada
     CONSTRAINT fk_nummat_retirada FOREIGN KEY (nummat) REFERENCES bibliotecario,
     CONSTRAINT fk_codres_retirada FOREIGN KEY (codres) REFERENCES reserva
 );
+
+CREATE VIEW v_autores_lajeado (cod_autor, autor, cidade)
+AS
+SELECT a.codaut, a.nome, c.nome
+FROM cidade c, autor a
+WHERE c.codcid = a.codcid AND c.nome = 'Lajeado';
+
+-- Mostrar os livros os autores de Lajeado
+SELECT l.codlivro, l.titulo, v.autor
+FROM livro l, livroautor la, v_autores_lajeado v
+WHERE l.codlivro = la.codlivro AND la.codaut = v.cod_autor;
