@@ -55,7 +55,7 @@ usuário e para cada um, a contagem de reservas e a contagem de retiradas. */
 
 create view v_qntdret_usu
 as
-select u.codusu, count(rt.codret) as qntd_ret
+select u.codusu, u.nome, count(rt.codret) as qntd_ret
 from usuario u,
      retirada rt
 where rt.codusu = u.codusu
@@ -80,41 +80,39 @@ order by vres.codusu;
 uma nova consulta que utilize estas visões para mostrar os resultados exibidos abaixo.
 Ordenar os dados da consulta final pelo nome da editora. */
 
-create view v_multasLivro_2019 (somaMulta_2019, mediaMulta_2019)
+create view v_multasLivro_2019 (codlivro, soma, media)
 as
-select sum(r.multa), avg(r.multa)
-from retirada r,
-     livro l
-where r.codlivro = l.codlivro
-  and r.dataret between '2019-01-01' and '2019-12-31';
+select r.codlivro, sum(r.multa), avg(r.multa)
+from retirada r
+where r.dataret between '2019-01-01' and '2019-12-31'
+group by r.codlivro;
 
-create view v_multasLivro_2018 (somaMulta_2018, mediaMulta_2018)
+create view v_multasLivro_2018 (codlivro, soma, media)
 as
-select sum(r.multa), avg(r.multa)
-from retirada r,
-     livro l
-where r.codlivro = l.codlivro
-  and r.dataret between '2018-01-01' and '2018-12-31';
+select r.codlivro, sum(r.multa), avg(r.multa)
+from retirada r
+where r.dataret between '2018-01-01' and '2018-12-31'
+group by r.codlivro;
 
-create view v_multasLivro_2017 (somaMulta_2017, mediaMulta_2017)
+create view v_multasLivro_2017 (codlivro, soma, media)
 as
-select sum(r.multa), avg(r.multa)
-from retirada r,
-     livro l
-where r.codlivro = l.codlivro
-  and r.dataret between '2017-01-01' and '2017-12-31';
+select r.codlivro, sum(r.multa), avg(r.multa)
+from retirada r
+where r.dataret between '2017-01-01' and '2017-12-31'
+group by r.codlivro;
 
-drop view v_multasLivro_2017;
-
-select e.nome,
-       m2019.somaMulta_2019,
-       m2019.mediaMulta_2019,
-       m2018.somaMulta_2018,
-       m2018.mediaMulta_2018,
-       m2017.somaMulta_2017,
-       m2017.mediaMulta_2017
-from v_multasLivro_2017 m2017,
-     v_multasLivro_2018 m2018,
-     v_multasLivro_2019 m2019,
-     editora e
-order by e.nome;
+select l.codlivro,
+       l.titulo,
+       v19.soma,
+       v19.media,
+       v18.soma,
+       v18.media,
+       v17.soma,
+       v17.media
+from livro l
+         left join v_multasLivro_2017 v17 on l.codlivro = v17.codlivro
+         left join v_multasLivro_2018 v18 on l.codlivro = v18.codlivro
+         left join v_multasLivro_2019 v19 on l.codlivro = v19.codlivro
+where v19.soma is not null
+   or v18.soma is not null
+   or v17.soma is not null;
