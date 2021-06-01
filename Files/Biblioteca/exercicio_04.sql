@@ -22,7 +22,7 @@ WHERE u.codusu = r.codusu
   AND u.codcid = c.codcid
   AND l.numest = es.numest
   AND l.codedit = e.codedit
-  AND r.dataret BETWEEN '01/01/2017' AND '03/12/2017'
+  AND r.dataret BETWEEN '01/01/2017' AND '31/12/2017'
 ORDER BY u.nome;
 
 /* Exibir a lista completa das editoras cadastradas e para cada uma delas, mostrar as retiradas dos
